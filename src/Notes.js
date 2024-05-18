@@ -29,7 +29,7 @@ const Notes = ({ playerRef, videoId }) => {
         const currentDate = new Date();
         const year = currentDate.getFullYear().toString().slice(-2); // Get last two digits of the year
         const date = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'short' })} '${year}`;
-    
+
         const newNote = { timestamp, date, content: currentNote, image };
         if (editIndex !== null) {
             const updatedNotes = notes.map((note, index) =>
@@ -45,13 +45,13 @@ const Notes = ({ playerRef, videoId }) => {
         fileInputRef.current.value = ''; // Reset file input value
         setEditorKey(prevKey => prevKey + 1);
     };
-    
 
     const editNote = (index) => {
         const { content, image } = notes[index];
         setCurrentNote(content);
         setImage(image);
         setEditIndex(index);
+        setEditorKey(prevKey => prevKey + 1); // Force re-render the editor
     };
 
     const deleteNote = (index) => {
@@ -79,7 +79,7 @@ const Notes = ({ playerRef, videoId }) => {
                 apiKey='o0hi96l7nw5oyj4gk3egybxr6bn0zt1q22gpnzeu82awqzay'
                 key={editorKey} // Key prop to reset the Editor component
                 textareaName='Body'
-                initialValue="<p>Add a note...</p>"
+                value={currentNote} // Use value instead of initialValue
                 className="border rounded-lg p-2 w-full mb-1"
                 init={{
                     height: 300,
